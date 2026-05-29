@@ -22,6 +22,8 @@ export default function DashboardPage() {
   const [reminderTime, setReminderTime] = useState("");
 
   const [medicines, setMedicines] = useState<any[]>([]);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [loadingAI, setLoadingAI] = useState(false);
 
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -200,6 +202,42 @@ return () => clearInterval(interval);
     alert("Notifications denied");
   }
 }
+
+async function handlePrescriptionUpload() {
+
+  if (!imageFile) return;
+
+  setLoadingAI(true);
+
+  const reader = new FileReader();
+
+  reader.readAsDataURL(imageFile);
+
+  reader.onloadend = async () => {
+
+    const base64 = reader.result
+      ?.toString()
+      .split(",")[1];
+
+    const response = await fetch("/api/prescription", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        image: base64,
+      }),
+    });
+
+    const data = await response.json();
+
+    console.log(data);
+
+    alert("AI scan complete! Check console.");
+
+    setLoadingAI(false);
+  };
+}
   return (
 
     <main className="min-h-screen bg-gray-100 px-4 py-8 pb-28 flex justify-center">
@@ -276,7 +314,27 @@ return () => clearInterval(interval);
           </h2>
 
           <div className="mt-6 space-y-4">
+          <div className="space-y-4">
 
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) => {
+      if (e.target.files?.[0]) {
+        setImageFile(e.target.files[0]);
+      }
+    }}
+    className="w-full text-black"
+  />
+
+  <button
+    onClick={handlePrescriptionUpload}
+    className="w-full bg-blue-600 text-white py-4 rounded-2xl font-semibold"
+  >
+    {loadingAI ? "Scanning..." : "Scan Prescription with AI"}
+  </button>
+
+</div>
             <input
               type="text"
               placeholder="Medicine Name"
