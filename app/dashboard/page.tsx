@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import QRCode from "react-qr-code";
 import { toPng } from "html-to-image";
-
+import BottomNav from "../components/BottomNav";
 
 export default function DashboardPage() {
 
@@ -353,7 +353,7 @@ export default function DashboardPage() {
 
       </div>
 
-      
+      <BottomNav />
 
     </main>
   );
