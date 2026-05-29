@@ -130,6 +130,25 @@ export default function DashboardPage() {
 
     link.click();
   }
+function checkMedicineReminders() {
+
+  const now = new Date();
+
+  const currentTime =
+    now.getHours().toString().padStart(2, "0") +
+    ":" +
+    now.getMinutes().toString().padStart(2, "0");
+
+  medicines.forEach((medicine) => {
+
+    if (medicine.reminder_time === currentTime) {
+
+      new Notification("Medicine Reminder 💊", {
+        body: `Time to take ${medicine.medicine_name}`,
+      });
+    }
+  });
+}
 
   useEffect(() => {
 
@@ -161,9 +180,26 @@ export default function DashboardPage() {
 
     loadProfile();
     loadMedicines();
+    const interval = setInterval(() => {
+  checkMedicineReminders();
+}, 60000);
+
+return () => clearInterval(interval);
 
   }, []);
+   async function enableNotifications() {
 
+  const permission = await Notification.requestPermission();
+
+  if (permission === "granted") {
+
+    alert("Notifications enabled!");
+
+  } else {
+
+    alert("Notifications denied");
+  }
+}
   return (
 
     <main className="min-h-screen bg-gray-100 px-4 py-8 pb-28 flex justify-center">
@@ -312,7 +348,12 @@ export default function DashboardPage() {
           </div>
 
         </div>
-
+<button
+  onClick={enableNotifications}
+  className="w-full bg-blue-600 text-white py-4 rounded-2xl font-semibold"
+>
+  Enable Notifications
+</button>
         <div className="flex justify-center">
 
           <div
