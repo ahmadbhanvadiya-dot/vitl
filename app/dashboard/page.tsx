@@ -19,6 +19,7 @@ export default function DashboardPage() {
   const [medicineName, setMedicineName] = useState("");
   const [dosage, setDosage] = useState("");
   const [timing, setTiming] = useState("");
+  const [reminderTime, setReminderTime] = useState("");
 
   const [medicines, setMedicines] = useState<any[]>([]);
 
@@ -95,6 +96,7 @@ export default function DashboardPage() {
         medicine_name: medicineName,
         dosage: dosage,
         timing: timing,
+        reminder_time: reminderTime,
       });
 
     if (error) {
@@ -108,6 +110,7 @@ export default function DashboardPage() {
       setMedicineName("");
       setDosage("");
       setTiming("");
+      setReminderTime("");
 
       loadMedicines();
     }
@@ -261,6 +264,12 @@ export default function DashboardPage() {
               onChange={(e) => setTiming(e.target.value)}
               className="w-full p-4 rounded-2xl border border-gray-200 text-black"
             />
+            <input
+              type="time"
+              value={reminderTime}
+              onChange={(e) => setReminderTime(e.target.value)}
+            className="w-full p-4 rounded-2xl border border-gray-200 text-black"
+            />
 
             <button
               onClick={handleAddMedicine}
@@ -290,6 +299,10 @@ export default function DashboardPage() {
 
                 <p className="text-red-700 font-medium mt-2">
                   {medicine.timing}
+                </p>
+
+                <p className="text-gray-500 text-sm mt-1">
+                 ⏰ {medicine.reminder_time}
                 </p>
 
               </div>
