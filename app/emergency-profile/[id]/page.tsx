@@ -14,10 +14,13 @@ export default async function EmergencyProfilePage({
     .eq("id", id)
     .single();
 
-    const { data: medicines } = await supabase
+    const { data: medicines, error: medicinesError } = await supabase
   .from("medicines")
   .select("*")
   .eq("user_id", id);
+
+console.log("Medicines:", medicines);
+console.log("Medicines Error:", medicinesError);
 
   if (!profile) {
 
