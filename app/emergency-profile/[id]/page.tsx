@@ -136,6 +136,10 @@ console.log("Medicines Error:", medicinesError);
     Current Medicines
   </p>
 
+  <p className="text-black font-bold mt-2">
+    Medicines found: {medicines?.length || 0}
+  </p>
+
   <div className="mt-3 space-y-3">
 
     {medicines && medicines.length > 0 ? (
