@@ -14,6 +14,11 @@ export default async function EmergencyProfilePage({
     .eq("id", id)
     .single();
 
+    const { data: medicines } = await supabase
+  .from("medicines")
+  .select("*")
+  .eq("user_id", id);
+
   if (!profile) {
 
     return (
@@ -121,6 +126,51 @@ export default async function EmergencyProfilePage({
               </h2>
 
             </div>
+
+            <div className="bg-gray-100 rounded-2xl p-5">
+
+  <p className="text-gray-500 text-sm">
+    Current Medicines
+  </p>
+
+  <div className="mt-3 space-y-3">
+
+    {medicines && medicines.length > 0 ? (
+
+      medicines.map((medicine) => (
+
+        <div
+          key={medicine.id}
+          className="bg-white rounded-xl p-3"
+        >
+
+          <p className="font-semibold text-black">
+            {medicine.medicine_name}
+          </p>
+
+          <p className="text-sm text-gray-600">
+            {medicine.dosage}
+          </p>
+
+          <p className="text-sm text-red-700">
+            {medicine.timing}
+          </p>
+
+        </div>
+
+      ))
+
+    ) : (
+
+      <p className="text-gray-500">
+        No medicines listed
+      </p>
+
+    )}
+
+  </div>
+
+</div>
 
           </div>
 
