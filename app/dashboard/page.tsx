@@ -316,6 +316,12 @@ async function handlePrescriptionUpload() {
           <div className="mt-6 space-y-4">
           <div className="space-y-4">
 
+  <label className="w-full flex items-center justify-center bg-gray-200 text-black py-4 rounded-2xl font-semibold cursor-pointer hover:bg-gray-300 transition">
+
+  {imageFile
+    ? imageFile.name
+    : "Upload Prescription Image"}
+
   <input
     type="file"
     accept="image/*"
@@ -324,8 +330,10 @@ async function handlePrescriptionUpload() {
         setImageFile(e.target.files[0]);
       }
     }}
-    className="w-full text-black"
+    className="hidden"
   />
+
+</label>
 
   <button
     onClick={handlePrescriptionUpload}
