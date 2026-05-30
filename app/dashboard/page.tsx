@@ -34,6 +34,7 @@ export default function DashboardPage() {
 
   async function handleSaveProfile() {
 
+
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -85,6 +86,7 @@ export default function DashboardPage() {
   }
 
   async function handleAddMedicine() {
+    
 
     const {
       data: { user },
@@ -118,6 +120,24 @@ export default function DashboardPage() {
       loadMedicines();
     }
   }
+
+  async function handleDeleteMedicine(id: string) {
+
+  const { error } = await supabase
+    .from("medicines")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+
+    alert(error.message);
+
+  } else {
+
+    loadMedicines();
+
+  }
+}
 
   async function downloadQRCard() {
 
@@ -459,6 +479,13 @@ try {
                 <p className="text-gray-500 text-sm mt-1">
                  ⏰ {medicine.reminder_time}
                 </p>
+
+                <button
+      onClick={() => handleDeleteMedicine(medicine.id)}
+      className="mt-4 bg-red-600 text-white px-4 py-2 rounded-xl"
+    >
+      🗑️ Delete
+    </button>
 
               </div>
 
