@@ -24,6 +24,7 @@ export default function DashboardPage() {
   const [medicines, setMedicines] = useState<any[]>([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [loadingAI, setLoadingAI] = useState(false);
+  const [aiMedicines, setAiMedicines] = useState<any[]>([]);
 
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -231,9 +232,25 @@ async function handlePrescriptionUpload() {
 
     const data = await response.json();
 
-    console.log(data);
+try {
 
-    alert("AI scan complete! Check console.");
+  const medicines = JSON.parse(data.data);
+
+  setAiMedicines(medicines);
+
+  if (medicines.length > 0) {
+
+    setMedicineName(medicines[0].medicine_name || "");
+    setDosage(medicines[0].dosage || "");
+    setTiming(medicines[0].timing || "");
+  }
+
+  alert("Prescription scanned successfully!");
+
+} catch {
+
+  alert("AI returned invalid data");
+}
 
     setLoadingAI(false);
   };
@@ -343,6 +360,42 @@ async function handlePrescriptionUpload() {
   </button>
 
 </div>
+            {aiMedicines.length > 0 && (
+
+  <div className="bg-green-50 border border-green-200 rounded-2xl p-4">
+
+    <h3 className="font-bold text-green-700">
+      AI Detected Medicines
+    </h3>
+
+    <div className="mt-3 space-y-2">
+
+      {aiMedicines.map((med, index) => (
+
+        <div
+          key={index}
+          className="bg-white rounded-xl p-3"
+        >
+          <p className="font-semibold">
+            {med.medicine_name}
+          </p>
+
+          <p className="text-sm text-gray-600">
+            {med.dosage}
+          </p>
+
+          <p className="text-sm text-red-600">
+            {med.timing}
+          </p>
+        </div>
+
+      ))}
+
+    </div>
+
+  </div>
+
+)}
             <input
               type="text"
               placeholder="Medicine Name"
