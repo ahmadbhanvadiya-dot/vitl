@@ -19,8 +19,10 @@ export default async function EmergencyProfilePage({
   .select("*")
   .eq("user_id", id);
 
+console.log("ID:", id);
 console.log("Medicines:", medicines);
 console.log("Medicines Error:", medicinesError);
+
 
   if (!profile) {
 
