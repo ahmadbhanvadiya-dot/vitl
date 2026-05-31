@@ -211,15 +211,16 @@ async function handleScanPrescription() {
     console.log("Response received");
     const data = await response.json();
 
-    if (data.success) {
+if (data.success) {
 
-      setScanResult(data.text);
+  setScanResult(data.text);
 
-    } else {
+} else {
 
-      alert("Scan failed");
+  alert(data.error);
+  console.log(data);
 
-    }
+}
 
   };
 

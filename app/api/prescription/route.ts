@@ -39,20 +39,18 @@ export async function POST(req: Request) {
       text: result.response.text(),
     });
 
-  } catch (error) {
+  } catch (error: any) {
 
-    console.error(error);
+  console.error("GEMINI ERROR:", error);
 
-    return Response.json(
-      {
-        success: false,
-        error: "Failed to scan prescription",
-      },
-      {
-        status: 500,
-      }
-    );
-
-  }
+  return Response.json(
+    {
+      success: false,
+      error: error?.message || "Unknown error",
+    },
+    {
+      status: 500,
+    }
+  );
 
 }
