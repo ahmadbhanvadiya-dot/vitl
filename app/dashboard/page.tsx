@@ -30,6 +30,7 @@ export default function DashboardPage() {
   const [aiMedicines, setAiMedicines] = useState<any[]>([]);
 
   const [prescriptionImage, setPrescriptionImage] = useState<File | null>(null);
+  const [scanResult, setScanResult] = useState("");
 
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -208,7 +209,7 @@ async function handleScanPrescription() {
 
     if (data.success) {
 
-      alert(data.text);
+      setScanResult(data.text);
 
     } else {
 
@@ -462,6 +463,14 @@ try {
 >
   Scan Prescription
 </button>
+
+{scanResult && (
+  <div className="mt-4 bg-gray-100 rounded-2xl p-4">
+    <pre className="whitespace-pre-wrap text-black">
+      {scanResult}
+    </pre>
+  </div>
+)}
 
   </div>
 
