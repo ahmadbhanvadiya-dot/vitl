@@ -448,14 +448,15 @@ try {
 
   <div className="mt-6 space-y-4">
 
-    <label
-  htmlFor="prescription-upload"
-  className="block w-full cursor-pointer bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl p-4 text-center font-semibold truncate"
->
-  {prescriptionImage
-    ? `📄 ${prescriptionImage.name}`
-    : "📤 Choose Prescription"}
-</label>
+    <input
+  type="file"
+  accept="image/*"
+  onChange={(e) =>
+    setPrescriptionImage(
+      e.target.files?.[0] || null
+    )
+  }
+/>
 
       <button
   onClick={handleScanPrescription}
