@@ -450,19 +450,24 @@ try {
 
     <label
   htmlFor="prescription-upload"
-  className="block w-full cursor-pointer bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl p-4 text-center font-semibold truncate"
+  className="block w-full cursor-pointer bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl p-4 text-center font-semibold"
 >
   {prescriptionImage
     ? `📄 ${prescriptionImage.name}`
     : "📤 Choose Prescription"}
 </label>
 
-      <button
-  onClick={handleScanPrescription}
-  className="w-full bg-black text-white py-4 rounded-2xl font-semibold"
->
-  Scan Prescription
-</button>
+<input
+  id="prescription-upload"
+  type="file"
+  accept="image/*"
+  onChange={(e) =>
+    setPrescriptionImage(
+      e.target.files?.[0] || null
+    )
+  }
+  className="hidden"
+/>
 
 {scanResult && (
   <div className="mt-4 bg-gray-100 rounded-2xl p-4">
