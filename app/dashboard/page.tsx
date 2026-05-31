@@ -433,12 +433,11 @@ try {
             />
 
             <input
-              type="text"
-              placeholder="Timing"
-              value={timing}
-              onChange={(e) => setTiming(e.target.value)}
-              className="w-full p-4 rounded-2xl border border-gray-200 text-black"
-            />
+  type="time"
+  value={timing}
+  onChange={(e) => setTiming(e.target.value)}
+  className="w-full p-4 rounded-2xl border border-gray-200 text-black"
+/>
             <input
               type="time"
               value={reminderTime}
