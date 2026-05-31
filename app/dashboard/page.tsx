@@ -22,6 +22,9 @@ export default function DashboardPage() {
   const [reminderTime, setReminderTime] = useState("");
 
   const [medicines, setMedicines] = useState<any[]>([]);
+
+  const [editingId, setEditingId] = useState<string | null>(null);
+
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [loadingAI, setLoadingAI] = useState(false);
   const [aiMedicines, setAiMedicines] = useState<any[]>([]);
@@ -94,31 +97,60 @@ export default function DashboardPage() {
 
     if (!user) return;
 
-    const { error } = await supabase
-      .from("medicines")
-      .insert({
-        user_id: user.id,
-        medicine_name: medicineName,
-        dosage: dosage,
-        timing: timing,
-        reminder_time: reminderTime,
-      });
+ if (editingId) {
 
-    if (error) {
+  const { error } = await supabase
+    .from("medicines")
+    .update({
+      medicine_name: medicineName,
+      dosage: dosage,
+      timing: timing,
+    })
+    .eq("id", editingId);
 
-      alert(error.message);
+  if (error) {
 
-    } else {
+    alert(error.message);
 
-      alert("Medicine added!");
+  } else {
 
-      setMedicineName("");
-      setDosage("");
-      setTiming("");
-      setReminderTime("");
+    alert("Medicine updated!");
 
-      loadMedicines();
-    }
+    setEditingId(null);
+
+    setMedicineName("");
+    setDosage("");
+    setTiming("");
+
+    loadMedicines();
+  }
+
+} else {
+
+  const { error } = await supabase
+    .from("medicines")
+    .insert({
+      user_id: user.id,
+      medicine_name: medicineName,
+      dosage: dosage,
+      timing: timing,
+    });
+
+  if (error) {
+
+    alert(error.message);
+
+  } else {
+
+    alert("Medicine added!");
+
+    setMedicineName("");
+    setDosage("");
+    setTiming("");
+
+    loadMedicines();
+  }
+}
   }
 
   async function handleDeleteMedicine(id: string) {
@@ -137,6 +169,15 @@ export default function DashboardPage() {
     loadMedicines();
 
   }
+}
+
+function handleEditMedicine(medicine: any) {
+
+  setMedicineName(medicine.medicine_name);
+  setDosage(medicine.dosage);
+  setTiming(medicine.timing);
+
+  setEditingId(medicine.id);
 }
 
   async function downloadQRCard() {
@@ -446,11 +487,11 @@ try {
             />
 
             <button
-              onClick={handleAddMedicine}
-              className="w-full bg-red-700 text-white py-4 rounded-2xl font-semibold"
-            >
-              Add Medicine
-            </button>
+  onClick={handleAddMedicine}
+  className="w-full bg-red-700 text-white py-4 rounded-2xl font-semibold"
+>
+  {editingId ? "Update Medicine" : "Add Medicine"}
+</button>
 
           </div>
 
@@ -478,6 +519,13 @@ try {
                 <p className="text-gray-500 text-sm mt-1">
                  ⏰ {medicine.reminder_time}
                 </p>
+
+                <button
+  onClick={() => handleEditMedicine(medicine)}
+  className="mt-4 mr-2 bg-blue-600 text-white px-4 py-2 rounded-xl"
+>
+  ✏️ Edit
+</button>
 
                 <button
       onClick={() => handleDeleteMedicine(medicine.id)}
