@@ -195,7 +195,7 @@ async function handleScanPrescription() {
       .split(",")[1];
 
     const response = await fetch(
-      "/api/scan-prescription",
+       "/api/prescription",
       {
         method: "POST",
         headers: {
@@ -207,6 +207,7 @@ async function handleScanPrescription() {
         }),
       }
     );
+    console.log("Status:", response.status);
     console.log("Response received");
     const data = await response.json();
 
