@@ -175,6 +175,8 @@ export default function DashboardPage() {
 }
 async function handleScanPrescription() {
 
+  console.log("handleScanPrescription started");
+
   if (!prescriptionImage) {
 
     alert("Please select an image");
@@ -186,6 +188,7 @@ async function handleScanPrescription() {
   const reader = new FileReader();
 
   reader.onloadend = async () => {
+     console.log("About to call API");
 
     const base64 = reader.result
       ?.toString()
@@ -204,7 +207,7 @@ async function handleScanPrescription() {
         }),
       }
     );
-
+    console.log("Response received");
     const data = await response.json();
 
     if (data.success) {
@@ -470,10 +473,7 @@ try {
 />
 
  <button
-  onClick={() => {
-    console.log("SCAN BUTTON CLICKED");
-    alert("SCAN BUTTON CLICKED");
-  }}
+  onClick={handleScanPrescription}
   className="w-full bg-black text-white py-4 rounded-2xl font-semibold"
 >
   Scan Prescription
