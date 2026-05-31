@@ -172,6 +172,54 @@ export default function DashboardPage() {
 
   }
 }
+async function handleScanPrescription() {
+
+  if (!prescriptionImage) {
+
+    alert("Please select an image");
+
+    return;
+
+  }
+
+  const reader = new FileReader();
+
+  reader.onloadend = async () => {
+
+    const base64 = reader.result
+      ?.toString()
+      .split(",")[1];
+
+    const response = await fetch(
+      "/api/scan-prescription",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          image: base64,
+          mimeType: prescriptionImage.type,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (data.success) {
+
+      alert(data.text);
+
+    } else {
+
+      alert("Scan failed");
+
+    }
+
+  };
+
+  reader.readAsDataURL(prescriptionImage);
+}
 
 function handleEditMedicine(medicine: any) {
 
@@ -410,11 +458,12 @@ try {
       className="w-full"
     />
 
-    <button
-      className="w-full bg-black text-white py-4 rounded-2xl font-semibold"
-    >
-      Scan Prescription
-    </button>
+      <button
+  onClick={handleScanPrescription}
+  className="w-full bg-black text-white py-4 rounded-2xl font-semibold"
+>
+  Scan Prescription
+</button>
 
   </div>
 
