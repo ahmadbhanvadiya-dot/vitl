@@ -29,6 +29,8 @@ export default function DashboardPage() {
   const [loadingAI, setLoadingAI] = useState(false);
   const [aiMedicines, setAiMedicines] = useState<any[]>([]);
 
+  const [prescriptionImage, setPrescriptionImage] = useState<File | null>(null);
+
   const cardRef = useRef<HTMLDivElement>(null);
 
   const qrValue = userId
@@ -333,6 +335,23 @@ try {
           </p>
 
           <div className="mt-8 space-y-4">
+
+            <input
+  type="file"
+  accept="image/*"
+  onChange={(e) =>
+    setPrescriptionImage(
+      e.target.files?.[0] || null
+    )
+  }
+  className="w-full"
+/>
+
+<button
+  className="w-full bg-black text-white py-4 rounded-2xl font-semibold"
+>
+  Scan Prescription
+</button>
 
             <input
               type="text"
