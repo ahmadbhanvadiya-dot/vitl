@@ -449,7 +449,7 @@ try {
 
     <label
   htmlFor="prescription-upload"
-  className="block w-full cursor-pointer bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl p-4 text-center font-semibold"
+  className="block w-full cursor-pointer bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl p-4 text-center font-semibold truncate"
 >
   {prescriptionImage
     ? `📄 ${prescriptionImage.name}`
