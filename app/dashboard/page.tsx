@@ -447,16 +447,26 @@ try {
 
   <div className="mt-6 space-y-4">
 
-    <input
-      type="file"
-      accept="image/*"
-      onChange={(e) =>
-        setPrescriptionImage(
-          e.target.files?.[0] || null
-        )
-      }
-      className="w-full"
-    />
+    <label
+  htmlFor="prescription-upload"
+  className="block w-full cursor-pointer bg-gray-100 border border-gray-200 rounded-2xl p-4 text-center hover:bg-gray-200 transition"
+>
+  {prescriptionImage
+    ? `📄 ${prescriptionImage.name}`
+    : "📤 Upload Prescription"}
+</label>
+
+<input
+  id="prescription-upload"
+  type="file"
+  accept="image/*"
+  onChange={(e) =>
+    setPrescriptionImage(
+      e.target.files?.[0] || null
+    )
+  }
+  className="hidden"
+/>
 
       <button
   onClick={handleScanPrescription}
