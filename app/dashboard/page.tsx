@@ -31,7 +31,7 @@ export default function DashboardPage() {
 
   const [prescriptionImage, setPrescriptionImage] = useState<File | null>(null);
   const [scanResult, setScanResult] = useState("");
-
+  const [isScanning, setIsScanning] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
   const qrValue = userId
