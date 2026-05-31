@@ -337,23 +337,6 @@ try {
           <div className="mt-8 space-y-4">
 
             <input
-  type="file"
-  accept="image/*"
-  onChange={(e) =>
-    setPrescriptionImage(
-      e.target.files?.[0] || null
-    )
-  }
-  className="w-full"
-/>
-
-<button
-  className="w-full bg-black text-white py-4 rounded-2xl font-semibold"
->
-  Scan Prescription
-</button>
-
-            <input
               type="text"
               placeholder="Full Name"
               value={fullName}
@@ -403,6 +386,40 @@ try {
           </div>
 
         </div>
+
+<div className="bg-white rounded-3xl border border-gray-200 p-6">
+
+  <h2 className="text-2xl font-bold text-black">
+    AI Prescription Scanner
+  </h2>
+
+  <p className="text-gray-500 mt-2">
+    Upload a prescription and let AI extract medicines.
+  </p>
+
+  <div className="mt-6 space-y-4">
+
+    <input
+      type="file"
+      accept="image/*"
+      onChange={(e) =>
+        setPrescriptionImage(
+          e.target.files?.[0] || null
+        )
+      }
+      className="w-full"
+    />
+
+    <button
+      className="w-full bg-black text-white py-4 rounded-2xl font-semibold"
+    >
+      Scan Prescription
+    </button>
+
+  </div>
+
+</div>
+
 
         <div className="bg-white rounded-3xl border border-gray-200 p-6">
 
