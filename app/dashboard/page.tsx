@@ -518,44 +518,44 @@ try {
 
             {medicines.map((medicine) => (
 
-              <div
-                key={medicine.id}
-                className="bg-gray-100 rounded-2xl p-4"
-              >
+  <div
+    key={medicine.id}
+    className="bg-gray-100 rounded-2xl p-4"
+  >
 
-                <h3 className="text-lg font-bold text-black">
-                  {medicine.medicine_name}
-                </h3>
+    <h3 className="text-xl font-bold text-black">
+      💊 {medicine.medicine_name}
+    </h3>
 
-                <p className="text-gray-600 mt-1">
-                  {medicine.dosage}
-                </p>
+    <p className="text-gray-600 mt-2">
+      Dose: {medicine.dosage}
+    </p>
 
-                <p className="text-red-700 font-medium mt-2">
-                  {medicine.timing}
-                </p>
+    <p className="text-red-700 font-medium mt-2">
+      ⏰ {medicine.timing}
+    </p>
 
-                <p className="text-gray-500 text-sm mt-1">
-                 ⏰ {medicine.reminder_time}
-                </p>
+    <div className="flex gap-2 mt-4">
 
-                <button
-  onClick={() => handleEditMedicine(medicine)}
-  className="mt-4 mr-2 bg-blue-600 text-white px-4 py-2 rounded-xl"
->
-  ✏️ Edit
-</button>
+      <button
+        onClick={() => handleEditMedicine(medicine)}
+        className="bg-blue-600 text-white px-4 py-2 rounded-xl"
+      >
+        ✏️ Edit
+      </button>
 
-                <button
-      onClick={() => handleDeleteMedicine(medicine.id)}
-      className="mt-4 bg-red-600 text-white px-4 py-2 rounded-xl"
-    >
-      🗑️ Delete
-    </button>
+      <button
+        onClick={() => handleDeleteMedicine(medicine.id)}
+        className="bg-red-600 text-white px-4 py-2 rounded-xl"
+      >
+        🗑️ Delete
+      </button>
 
-              </div>
+    </div>
 
-            ))}
+  </div>
+
+))}
 
           </div>
 
