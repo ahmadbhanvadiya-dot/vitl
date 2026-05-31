@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { supabase } from "../../lib/supabase";
+import Link from "next/link";
 
 export default function LoginPage() {
 
@@ -64,6 +65,21 @@ export default function LoginPage() {
           >
             Login
           </button>
+
+          <div className="mt-6 text-center">
+
+  <p className="text-gray-500">
+    Don't have an account?
+  </p>
+
+  <Link
+    href="/signup"
+    className="text-red-700 font-semibold"
+  >
+    Create an account
+  </Link>
+
+</div>
 
         </form>
 
