@@ -493,6 +493,25 @@ try {
   {editingId ? "Update Medicine" : "Add Medicine"}
 </button>
 
+{editingId && (
+
+  <button
+    onClick={() => {
+
+      setEditingId(null);
+
+      setMedicineName("");
+      setDosage("");
+      setTiming("");
+
+    }}
+    className="w-full mt-3 bg-gray-300 text-black py-4 rounded-2xl font-semibold"
+  >
+    Cancel Edit
+  </button>
+
+)}
+
           </div>
 
           <div className="mt-6 space-y-4">
