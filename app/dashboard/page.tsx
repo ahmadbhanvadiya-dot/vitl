@@ -448,7 +448,17 @@ try {
 
   <div className="mt-6 space-y-4">
 
-    <input
+    <label
+  htmlFor="prescription-upload"
+  className="block w-full cursor-pointer bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl p-4 text-center font-semibold"
+>
+  {prescriptionImage
+    ? `📄 ${prescriptionImage.name}`
+    : "📤 Choose Prescription"}
+</label>
+
+<input
+  id="prescription-upload"
   type="file"
   accept="image/*"
   onChange={(e) =>
@@ -456,6 +466,7 @@ try {
       e.target.files?.[0] || null
     )
   }
+  className="hidden"
 />
 
       <button
