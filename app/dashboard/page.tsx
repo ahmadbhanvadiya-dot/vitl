@@ -449,24 +449,12 @@ try {
 
     <label
   htmlFor="prescription-upload"
-  className="block w-full cursor-pointer bg-gray-100 border border-gray-200 rounded-2xl p-4 text-center hover:bg-gray-200 transition"
+  className="block w-full cursor-pointer bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl p-4 text-center font-semibold"
 >
   {prescriptionImage
     ? `📄 ${prescriptionImage.name}`
-    : "📤 Upload Prescription"}
+    : "📤 Choose Prescription"}
 </label>
-
-<input
-  id="prescription-upload"
-  type="file"
-  accept="image/*"
-  onChange={(e) =>
-    setPrescriptionImage(
-      e.target.files?.[0] || null
-    )
-  }
-  className="hidden"
-/>
 
       <button
   onClick={handleScanPrescription}
