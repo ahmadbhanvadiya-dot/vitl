@@ -469,8 +469,11 @@ try {
   className="hidden"
 />
 
-      <button
-  onClick={handleScanPrescription}
+ <button
+  onClick={() => {
+    console.log("SCAN BUTTON CLICKED");
+    alert("SCAN BUTTON CLICKED");
+  }}
   className="w-full bg-black text-white py-4 rounded-2xl font-semibold"
 >
   Scan Prescription
