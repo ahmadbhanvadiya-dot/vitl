@@ -559,19 +559,19 @@ return () => clearInterval(interval);
             {medicines.map((medicine) => (
 
   <div
-    key={medicine.id}
-    className="bg-gray-100 rounded-2xl p-4"
-  >
+  key={medicine.id}
+  className="bg-white border-2 border-red-200 rounded-2xl p-4 shadow-sm"
+>
 
-    <h3 className="text-xl font-bold text-black">
+    <h3 className="text-xl font-bold text-red-700">
       💊 {medicine.medicine_name}
     </h3>
 
-    <p className="text-gray-600 mt-2">
+    <p className="text-gray-800 mt-2 font-medium">
       Dose: {medicine.dosage}
     </p>
 
-    <p className="text-red-700 font-medium mt-2">
+    <p className="text-red-600 font-semibold mt-2">
       ⏰ {medicine.timing}
     </p>
 
