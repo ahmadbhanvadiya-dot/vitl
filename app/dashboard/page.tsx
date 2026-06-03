@@ -186,6 +186,8 @@ async function handleScanPrescription() {
 
   }
 
+ setIsScanning(true); 
+ 
   const reader = new FileReader();
 
   reader.onloadend = async () => {
