@@ -187,7 +187,7 @@ async function handleScanPrescription() {
   }
 
  setIsScanning(true); 
- 
+
   const reader = new FileReader();
 
   reader.onloadend = async () => {
@@ -221,6 +221,8 @@ if (data.success) {
     const medicines = JSON.parse(data.text);
 
     setAiMedicines(medicines);
+
+    setIsScanning(false);
 
   } catch {
 
