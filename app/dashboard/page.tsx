@@ -226,6 +226,8 @@ if (data.success) {
 
   } catch {
 
+    setIsScanning(false);
+
     alert("Failed to parse AI response");
 
   }
@@ -233,6 +235,8 @@ if (data.success) {
 } 
 
 else {
+
+  setIsScanning(false);
 
   alert(data.error);
   console.log(data);
