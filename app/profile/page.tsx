@@ -6,13 +6,32 @@ import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
 
-  
+    const [email, setEmail] = useState(""); 
+
   async function handleLogout() {
 
     await supabase.auth.signOut();
 
     window.location.href = "/login";
   }
+
+  useEffect(() => {
+
+  async function loadUser() {
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      setEmail(user.email || "");
+    }
+
+  }
+
+  loadUser();
+
+}, []);
 
   return (
     <main className="min-h-screen bg-gray-100 px-4 py-8 flex justify-center">
@@ -30,6 +49,9 @@ export default function ProfilePage() {
             <h1 className="text-3xl font-bold text-black mt-6">
               VITL
             </h1>
+            <p className="text-red-700 font-medium mt-2">
+  {email}
+</p>
 
             <p className="text-gray-500 mt-2">
               Emergency Medical Profile
