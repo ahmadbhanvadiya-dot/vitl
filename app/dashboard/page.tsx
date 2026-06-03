@@ -430,23 +430,13 @@ const compliance =
     : 0;
 
   return (
-
     <main className="min-h-screen bg-gray-100 px-4 py-8 pb-28 flex justify-center">
-
       <div className="w-full max-w-md space-y-8">
-
         <div className="bg-white rounded-3xl border border-gray-200 p-6">
-
-          <h1 className="text-4xl font-bold text-red-700">
-            VITL
-          </h1>
-
-          <p className="text-gray-500 mt-2">
-            Emergency Medical Profile
-          </p>
+          <h1 className="text-4xl font-bold text-red-700">VITL</h1>
+          <p className="text-gray-500 mt-2">Emergency Medical Profile</p>
 
           <div className="mt-8 space-y-4">
-
             <input
               type="text"
               placeholder="Full Name"
@@ -493,320 +483,63 @@ const compliance =
             >
               Save Medical Profile
             </button>
-
           </div>
-
         </div>
-
-<div className="bg-white rounded-3xl border border-gray-200 p-6">
-
-  <h2 className="text-2xl font-bold text-black">
-    AI Prescription Scanner
-  </h2>
-
-  <p className="text-gray-500 mt-2">
-    Upload a prescription and let AI extract medicines.
-  </p>
-
-  <div className="mt-6 space-y-4">
-
-    <label
-  htmlFor="prescription-upload"
-  className="block w-full cursor-pointer bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl p-4 text-center font-semibold"
->
-  {prescriptionImage
-    ? `📄 ${prescriptionImage.name}`
-    : "📤 Choose Prescription"}
-</label>
-
-<input
-  id="prescription-upload"
-  type="file"
-  accept="image/*"
-  onChange={(e) =>
-    setPrescriptionImage(
-      e.target.files?.[0] || null
-    )
-  }
-  className="hidden"
-/>
-
- <button
-  onClick={handleScanPrescription}
-  disabled={isScanning}
-  className="w-full bg-black text-white py-4 rounded-2xl font-semibold disabled:opacity-50"
->
-  {isScanning ? "🔄 Scanning..." : "📄 Scan Prescription"}
-</button>
-
-{aiMedicines.length > 0 && (
-
-  <>
-    <div className="mt-6 space-y-3">
-
-      {aiMedicines.map((medicine, index) => (
-
-        <div
-          key={index}
-          className="bg-red-50 border border-red-200 rounded-2xl p-4"
-        >
-
-          <p className="font-bold text-red-700">
-    {medicine.medicine_name}
-  </p>
-
-  <p className="text-gray-700">
-    {medicine.dosage}
-  </p>
-
-  <p className="text-red-600 font-medium">
-    {medicine.timing}
-  </p>
-
-        </div>
-
-        
-
-      ))}
-
-    </div>
-    
-  <button
-    onClick={handleSaveAiMedicines}
-    className="w-full bg-green-600 text-white py-4 rounded-2xl font-semibold mt-4"
-  >
-    💾 Save All Medicines
-  </button>
-  </>
-
-)}
-
-{scanResult && (
-  <div className="mt-4 bg-gray-100 rounded-2xl p-4">
-    <pre className="whitespace-pre-wrap text-black">
-      {scanResult}
-    </pre>
-  </div>
-)}
-
-  </div>
-
-</div>
-
 
         <div className="bg-white rounded-3xl border border-gray-200 p-6">
+          <h2 className="text-2xl font-bold text-black">Today's Progress</h2>
+          <p className="text-gray-500 mt-2">Medication compliance tracker</p>
 
-          <div className="bg-white rounded-3xl border border-gray-200 p-6">
+          <div className="mt-6">
+            <div className="w-full bg-gray-200 rounded-full h-4">
+              <div
+                className="bg-green-600 h-4 rounded-full"
+                style={{
+                  width: `${compliance}%`,
+                }}
+              />
+            </div>
 
-  <h2 className="text-2xl font-bold text-black">
-    Today's Progress
-  </h2>
+            <p className="mt-4 text-lg font-semibold text-black">
+              {takenCount} / {totalCount} Medicines Taken
+            </p>
 
-  <p className="text-gray-500 mt-2">
-    Medication compliance tracker
-  </p>
-
-  <div className="mt-6">
-
-    <div className="w-full bg-gray-200 rounded-full h-4">
-
-      <div
-        className="bg-green-600 h-4 rounded-full"
-        style={{
-          width: `${compliance}%`,
-        }}
-      />
-
-    </div>
-
-    <p className="mt-4 text-lg font-semibold text-black">
-      {takenCount} / {totalCount} Medicines Taken
-    </p>
-
-    <p className="text-green-600 font-bold text-xl">
-      {compliance}%
-    </p>
-
-  </div>
-
-</div>
-
-          <h2 className="text-2xl font-bold text-black">
-            Medicine Reminders
-          </h2>
-
-          <div className="mt-6 space-y-4">
-          
-          
-            <input
-              type="text"
-              placeholder="Medicine Name"
-              value={medicineName}
-              onChange={(e) => setMedicineName(e.target.value)}
-              className="w-full p-4 rounded-2xl border border-gray-200 text-black"
-            />
-
-            <input
-              type="text"
-              placeholder="Dosage"
-              value={dosage}
-              onChange={(e) => setDosage(e.target.value)}
-              className="w-full p-4 rounded-2xl border border-gray-200 text-black"
-            />
-
-            <input
-  type="time"
-  value={timing}
-  onChange={(e) => setTiming(e.target.value)}
-  className="w-full p-4 rounded-2xl border border-gray-200 text-black"
-/>
-            <input
-              type="time"
-              value={reminderTime}
-              onChange={(e) => setReminderTime(e.target.value)}
-            className="w-full p-4 rounded-2xl border border-gray-200 text-black"
-            />
-
-            <button
-  onClick={handleAddMedicine}
-  className="w-full bg-red-700 text-white py-4 rounded-2xl font-semibold"
->
-  {editingId ? "Update Medicine" : "Add Medicine"}
-</button>
-
-{editingId && (
-
-  <button
-    onClick={() => {
-
-      setEditingId(null);
-
-      setMedicineName("");
-      setDosage("");
-      setTiming("");
-
-    }}
-    className="w-full mt-3 bg-gray-300 text-black py-4 rounded-2xl font-semibold"
-  >
-    Cancel Edit
-  </button>
-
-)}
-
+            <p className="text-green-600 font-bold text-xl">{compliance}%</p>
           </div>
-
-          <div className="mt-6 space-y-4">
-
-            {medicines.map((medicine) => (
-
-  <div
-  key={medicine.id}
-  className="bg-white border-2 border-red-200 rounded-2xl p-4 shadow-sm"
->
-
-    <h3 className="text-xl font-bold text-red-700">
-      💊 {medicine.medicine_name}
-    </h3>
-
-    <p className="text-gray-800 mt-2 font-medium">
-      Dose: {medicine.dosage}
-    </p>
-
-    <p className="text-red-600 font-semibold mt-2">
-  ⏰ {medicine.timing}
-</p>
-
-<p
-  className={
-    medicine.taken_today
-      ? "text-green-600 font-semibold mt-2"
-      : "text-orange-600 font-semibold mt-2"
-  }
->
-  {medicine.taken_today
-    ? "✅ Taken Today"
-    : "⏳ Not Taken"}
-</p>
-    <div className="flex gap-2 mt-4">
-
-      <button
-        onClick={() => handleEditMedicine(medicine)}
-        className="bg-blue-600 text-white px-4 py-2 rounded-xl"
-      >
-        ✏️ Edit
-      </button>
-
-      <button
-        onClick={() => handleDeleteMedicine(medicine.id)}
-        className="bg-red-600 text-white px-4 py-2 rounded-xl"
-      >
-        🗑️ Delete
-      </button>
-
-      <button
-  onClick={() => handleMarkTaken(medicine.id)}
-  className="bg-green-600 text-white px-4 py-2 rounded-xl"
->
-  ✅ Taken
-</button>
-
-    </div>
-
-  </div>
-
-))}
-
-          </div>
-
         </div>
-<button
-  onClick={enableNotifications}
-  className="w-full bg-blue-600 text-white py-4 rounded-2xl font-semibold"
->
-  Enable Notifications
-</button>
-        <div className="flex justify-center">
 
+        <button
+          onClick={enableNotifications}
+          className="w-full bg-blue-600 text-white py-4 rounded-2xl font-semibold"
+        >
+          Enable Notifications
+        </button>
+
+        <div className="flex justify-center">
           <div
             ref={cardRef}
             className="w-[320px] bg-white rounded-[32px] border border-gray-200 p-8 flex flex-col items-center"
           >
-
-            <h2 className="text-4xl font-bold text-red-700">
-              VITL
-            </h2>
-
-            <p className="text-gray-500 mt-1 text-center">
-              Emergency Medical ID
-            </p>
+            <h2 className="text-4xl font-bold text-red-700">VITL</h2>
+            <p className="text-gray-500 mt-1 text-center">Emergency Medical ID</p>
 
             <div className="mt-6 text-center">
-
               <h3 className="text-2xl font-bold text-black">
                 {fullName || "Your Name"}
               </h3>
-
               <p className="text-red-700 font-bold text-xl mt-2">
                 {bloodGroup || "Blood Group"}
               </p>
-
             </div>
 
             <div className="bg-white p-4 rounded-2xl mt-8 border border-gray-200">
-
-              <QRCode
-                value={qrValue}
-                size={180}
-              />
-
+              <QRCode value={qrValue} size={180} />
             </div>
 
             <p className="text-xs text-gray-400 mt-6 text-center">
               Scan this QR during emergencies
             </p>
-
           </div>
-
         </div>
 
         <button
@@ -815,11 +548,9 @@ const compliance =
         >
           Download QR Card
         </button>
-
       </div>
 
       <BottomNav />
-
     </main>
   );
 }
