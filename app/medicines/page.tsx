@@ -99,6 +99,41 @@ async function handleScanPrescription() {
   reader.readAsDataURL(prescriptionImage);
 }
 
+
+async function saveDetectedMedicines() {
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return;
+
+  const medicinesToInsert = aiMedicines.map(
+    (medicine) => ({
+      user_id: user.id,
+      medicine_name: medicine.medicine_name,
+      dosage: medicine.dosage,
+      timing: medicine.timing,
+    })
+  );
+
+  const { error } = await supabase
+    .from("medicines")
+    .insert(medicinesToInsert);
+
+  if (error) {
+
+    alert(error.message);
+
+    return;
+
+  }
+
+  alert("Medicines saved!");
+
+  window.location.reload();
+}
+
 const takenCount = medicines.filter(
 (medicine) => medicine.taken_today
 ).length;
@@ -184,6 +219,13 @@ return (
           <p className="text-red-600 font-medium">
             {medicine.timing}
           </p>
+
+          <button
+  onClick={saveDetectedMedicines}
+  className="w-full mt-4 bg-green-600 text-white py-4 rounded-2xl font-semibold"
+>
+  💾 Save All Medicines
+</button>
 
         </div>
 
