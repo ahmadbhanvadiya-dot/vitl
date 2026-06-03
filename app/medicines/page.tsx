@@ -11,6 +11,11 @@ const [prescriptionImage, setPrescriptionImage] = useState<File | null>(null);
 const [aiMedicines, setAiMedicines] = useState<any[]>([]);
 const [isScanning, setIsScanning] = useState(false);
 
+const [medicineName, setMedicineName] = useState("");
+const [dosage, setDosage] = useState("");
+const [timing, setTiming] = useState("");
+const [reminderTime, setReminderTime] = useState("");
+
 useEffect(() => {
 
 async function loadMedicines() {
@@ -134,9 +139,47 @@ async function saveDetectedMedicines() {
   window.location.reload();
 }
 
+
+async function handleAddMedicine() {
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return;
+
+  const { error } = await supabase
+    .from("medicines")
+    .insert({
+      user_id: user.id,
+      medicine_name: medicineName,
+      dosage: dosage,
+      timing: timing,
+      reminder_time: reminderTime,
+      taken_today: false,
+    });
+
+  if (error) {
+
+    alert(error.message);
+
+  } else {
+
+    alert("Medicine added!");
+
+    setMedicineName("");
+    setDosage("");
+    setTiming("");
+    setReminderTime("");
+
+    window.location.reload();
+  }
+}
+
 const takenCount = medicines.filter(
 (medicine) => medicine.taken_today
 ).length;
+
 
 return (
 
@@ -191,6 +234,7 @@ return (
 
 </div>
 
+
 {aiMedicines.length > 0 && (
 
   <div className="bg-white rounded-3xl border border-gray-200 p-6">
@@ -236,6 +280,59 @@ return (
   </div>
 
 )}
+
+<div className="bg-white rounded-3xl border border-gray-200 p-6">
+
+  <h2 className="text-2xl font-bold text-black">
+    Add Medicine
+  </h2>
+
+  <p className="text-gray-500 mt-2">
+    Add a medicine manually.
+  </p>
+
+  <div className="mt-6 space-y-4">
+
+    <input
+      type="text"
+      placeholder="Medicine Name"
+      value={medicineName}
+      onChange={(e) => setMedicineName(e.target.value)}
+      className="w-full p-4 rounded-2xl border border-gray-200 text-black"
+    />
+
+    <input
+      type="text"
+      placeholder="Dosage"
+      value={dosage}
+      onChange={(e) => setDosage(e.target.value)}
+      className="w-full p-4 rounded-2xl border border-gray-200 text-black"
+    />
+
+    <input
+      type="time"
+      value={timing}
+      onChange={(e) => setTiming(e.target.value)}
+      className="w-full p-4 rounded-2xl border border-gray-200 text-black"
+    />
+
+    <input
+      type="time"
+      value={reminderTime}
+      onChange={(e) => setReminderTime(e.target.value)}
+      className="w-full p-4 rounded-2xl border border-gray-200 text-black"
+    />
+
+    <button
+      onClick={handleAddMedicine}
+      className="w-full bg-red-700 text-white py-4 rounded-2xl font-semibold"
+    >
+      Add Medicine
+    </button>
+
+  </div>
+
+</div>
 
     <div className="bg-white rounded-3xl border border-gray-200 p-6">
 
