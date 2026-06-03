@@ -2,9 +2,11 @@
 
 import BottomNav from "../components/BottomNav";
 import { supabase } from "../../lib/supabase";
+import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
 
+  
   async function handleLogout() {
 
     await supabase.auth.signOut();
