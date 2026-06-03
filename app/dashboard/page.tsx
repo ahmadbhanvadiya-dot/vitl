@@ -304,6 +304,26 @@ const { error } = await supabase
   }
 }
 
+async function handleMarkTaken(id: string) {
+
+  const { error } = await supabase
+    .from("medicines")
+    .update({
+      taken_today: true,
+    })
+    .eq("id", id);
+
+  if (error) {
+
+    alert(error.message);
+
+  } else {
+
+    loadMedicines();
+
+  }
+}
+
 function handleEditMedicine(medicine: any) {
 
   setMedicineName(medicine.medicine_name);
@@ -648,9 +668,20 @@ return () => clearInterval(interval);
     </p>
 
     <p className="text-red-600 font-semibold mt-2">
-      ⏰ {medicine.timing}
-    </p>
+  ⏰ {medicine.timing}
+</p>
 
+<p
+  className={
+    medicine.taken_today
+      ? "text-green-600 font-semibold mt-2"
+      : "text-orange-600 font-semibold mt-2"
+  }
+>
+  {medicine.taken_today
+    ? "✅ Taken Today"
+    : "⏳ Not Taken"}
+</p>
     <div className="flex gap-2 mt-4">
 
       <button
@@ -666,6 +697,13 @@ return () => clearInterval(interval);
       >
         🗑️ Delete
       </button>
+
+      <button
+  onClick={() => handleMarkTaken(medicine.id)}
+  className="bg-green-600 text-white px-4 py-2 rounded-xl"
+>
+  ✅ Taken
+</button>
 
     </div>
 
