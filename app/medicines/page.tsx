@@ -10,7 +10,6 @@ const [medicines, setMedicines] = useState<any[]>([]);
 
 useEffect(() => {
 
-```
 async function loadMedicines() {
 
   const {
@@ -31,7 +30,6 @@ async function loadMedicines() {
 }
 
 loadMedicines();
-```
 
 }, []);
 
@@ -41,7 +39,6 @@ const takenCount = medicines.filter(
 
 return (
 
-```
 <main className="min-h-screen bg-gray-100 px-4 py-8 pb-28 flex justify-center">
 
   <div className="w-full max-w-md space-y-6">
@@ -122,7 +119,7 @@ return (
   <BottomNav />
 
 </main>
-```
+
 
 );
 }
