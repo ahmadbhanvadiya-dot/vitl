@@ -6,7 +6,8 @@ import QRCode from "react-qr-code";
 import { toPng } from "html-to-image";
 import BottomNav from "../components/BottomNav";
 
-export default function DashboardPage() {
+export default function DashboardPage() {\
+
 
   const [fullName, setFullName] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
@@ -334,57 +335,7 @@ return () => clearInterval(interval);
   }
 }
 
-async function handlePrescriptionUpload() {
 
-  if (!imageFile) return;
-
-  setLoadingAI(true);
-
-  const reader = new FileReader();
-
-  reader.readAsDataURL(imageFile);
-
-  reader.onloadend = async () => {
-
-    const base64 = reader.result
-      ?.toString()
-      .split(",")[1];
-
-    const response = await fetch("/api/prescription", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        image: base64,
-      }),
-    });
-
-    const data = await response.json();
-
-try {
-
-  const medicines = JSON.parse(data.data);
-
-  setAiMedicines(medicines);
-
-  if (medicines.length > 0) {
-
-    setMedicineName(medicines[0].medicine_name || "");
-    setDosage(medicines[0].dosage || "");
-    setTiming(medicines[0].timing || "");
-  }
-
-  alert("Prescription scanned successfully!");
-
-} catch {
-
-  alert("AI returned invalid data");
-}
-
-    setLoadingAI(false);
-  };
-}
   return (
 
     <main className="min-h-screen bg-gray-100 px-4 py-8 pb-28 flex justify-center">
@@ -545,71 +496,8 @@ try {
           </h2>
 
           <div className="mt-6 space-y-4">
-          <div className="space-y-4">
-
-  <label className="w-full flex items-center justify-center bg-gray-200 text-black py-4 rounded-2xl font-semibold cursor-pointer hover:bg-gray-300 transition">
-
-  {imageFile
-    ? imageFile.name
-    : "Upload Prescription Image"}
-
-  <input
-    type="file"
-    accept="image/*"
-    onChange={(e) => {
-      if (e.target.files?.[0]) {
-        setImageFile(e.target.files[0]);
-      }
-    }}
-    className="hidden"
-  />
-
-</label>
-
-  <button
-    onClick={handlePrescriptionUpload}
-    className="w-full bg-blue-600 text-white py-4 rounded-2xl font-semibold"
-  >
-    {loadingAI ? "Scanning..." : "Scan Prescription with AI"}
-  </button>
-
-</div>
-            {aiMedicines.length > 0 && (
-
-  <div className="bg-green-50 border border-green-200 rounded-2xl p-4">
-
-    <h3 className="font-bold text-green-700">
-      AI Detected Medicines
-    </h3>
-
-    <div className="mt-3 space-y-2">
-
-      {aiMedicines.map((med, index) => (
-
-        <div
-          key={index}
-          className="bg-white rounded-xl p-3"
-        >
-          <p className="font-semibold">
-            {med.medicine_name}
-          </p>
-
-          <p className="text-sm text-gray-600">
-            {med.dosage}
-          </p>
-
-          <p className="text-sm text-red-600">
-            {med.timing}
-          </p>
-        </div>
-
-      ))}
-
-    </div>
-
-  </div>
-
-)}
+          
+          
             <input
               type="text"
               placeholder="Medicine Name"
