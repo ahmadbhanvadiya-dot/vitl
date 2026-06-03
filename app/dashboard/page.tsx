@@ -502,20 +502,20 @@ try {
 
       <div
         key={index}
-        className="bg-gray-100 rounded-2xl p-4"
+        className="bg-red-50 border border-red-200 rounded-2xl p-4"
       >
 
-        <p className="font-bold text-black">
-          {medicine.medicine_name}
-        </p>
+        <p className="font-bold text-red-700">
+  {medicine.medicine_name}
+</p>
 
-        <p className="text-gray-600">
-          {medicine.dosage}
-        </p>
+<p className="text-gray-700">
+  {medicine.dosage}
+</p>
 
-        <p className="text-red-700">
-          {medicine.timing}
-        </p>
+<p className="text-red-600 font-medium">
+  {medicine.timing}
+</p>
 
       </div>
 
