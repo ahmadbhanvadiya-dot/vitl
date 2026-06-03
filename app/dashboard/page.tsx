@@ -6,8 +6,7 @@ import QRCode from "react-qr-code";
 import { toPng } from "html-to-image";
 import BottomNav from "../components/BottomNav";
 
-export default function DashboardPage() {\
-
+export default function DashboardPage() {
 
   const [fullName, setFullName] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
