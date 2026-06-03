@@ -19,17 +19,26 @@ export async function POST(req: Request) {
     });
 
     const result = await model.generateContent([
-      `
-      Extract all medicines from this prescription.
+  `
+  Extract all medicines from this prescription.
 
-      Return only:
+  Return ONLY valid JSON.
 
-      Medicine Name
-      Dosage
-      Timing
+  Format:
 
-      Keep the response simple.
-      `,
+  [
+    {
+      "medicine_name": "",
+      "dosage": "",
+      "timing": ""
+    }
+  ]
+
+  No markdown.
+  No explanation.
+  No extra text.
+  Only JSON.
+  `,
       {
         inlineData: {
           mimeType: body.mimeType,

@@ -13,6 +13,7 @@ export default function DashboardPage() {
   const [allergies, setAllergies] = useState("");
   const [emergencyContact, setEmergencyContact] = useState("");
   const [medicalConditions, setMedicalConditions] = useState("");
+  
 
   const [userId, setUserId] = useState("");
 
@@ -213,9 +214,21 @@ async function handleScanPrescription() {
 
 if (data.success) {
 
-  setScanResult(data.text);
+  try {
 
-} else {
+    const medicines = JSON.parse(data.text);
+
+    setAiMedicines(medicines);
+
+  } catch {
+
+    alert("Failed to parse AI response");
+
+  }
+
+} 
+
+else {
 
   alert(data.error);
   console.log(data);
@@ -480,6 +493,37 @@ try {
 >
   Scan Prescription
 </button>
+
+{aiMedicines.length > 0 && (
+
+  <div className="mt-6 space-y-3">
+
+    {aiMedicines.map((medicine, index) => (
+
+      <div
+        key={index}
+        className="bg-gray-100 rounded-2xl p-4"
+      >
+
+        <p className="font-bold text-black">
+          {medicine.medicine_name}
+        </p>
+
+        <p className="text-gray-600">
+          {medicine.dosage}
+        </p>
+
+        <p className="text-red-700">
+          {medicine.timing}
+        </p>
+
+      </div>
+
+    ))}
+
+  </div>
+
+)}
 
 {scanResult && (
   <div className="mt-4 bg-gray-100 rounded-2xl p-4">
