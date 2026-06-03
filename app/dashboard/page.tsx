@@ -503,9 +503,10 @@ return () => clearInterval(interval);
 
  <button
   onClick={handleScanPrescription}
-  className="w-full bg-black text-white py-4 rounded-2xl font-semibold"
+  disabled={isScanning}
+  className="w-full bg-black text-white py-4 rounded-2xl font-semibold disabled:opacity-50"
 >
-  Scan Prescription
+  {isScanning ? "🔄 Scanning..." : "📄 Scan Prescription"}
 </button>
 
 {aiMedicines.length > 0 && (
