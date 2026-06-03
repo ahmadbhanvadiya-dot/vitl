@@ -248,16 +248,40 @@ async function handleSaveAiMedicines() {
 
   if (!user) return;
 
-  const medicinesToInsert = aiMedicines.map((med) => ({
+  const { data: existingMedicines } = await supabase
+  .from("medicines")
+  .select("medicine_name")
+  .eq("user_id", user.id);
+
+const existingNames =
+  existingMedicines?.map((m) =>
+    m.medicine_name.toLowerCase()
+  ) || [];
+
+const medicinesToInsert = aiMedicines
+  .filter(
+    (med) =>
+      !existingNames.includes(
+        med.medicine_name.toLowerCase()
+      )
+  )
+  .map((med) => ({
     user_id: user.id,
     medicine_name: med.medicine_name,
     dosage: med.dosage,
     timing: med.timing,
   }));
 
-  const { error } = await supabase
-    .from("medicines")
-    .insert(medicinesToInsert);
+if (medicinesToInsert.length === 0) {
+
+  alert("All medicines already exist!");
+
+  return;
+}
+
+const { error } = await supabase
+  .from("medicines")
+  .insert(medicinesToInsert);
 
   if (error) {
 
