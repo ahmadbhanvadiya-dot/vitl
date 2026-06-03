@@ -418,6 +418,16 @@ return () => clearInterval(interval);
   }
 }
 
+const takenCount = medicines.filter(
+  (medicine) => medicine.taken_today
+).length;
+
+const totalCount = medicines.length;
+
+const compliance =
+  totalCount > 0
+    ? Math.round((takenCount / totalCount) * 100)
+    : 0;
 
   return (
 
@@ -585,6 +595,41 @@ return () => clearInterval(interval);
 
 
         <div className="bg-white rounded-3xl border border-gray-200 p-6">
+
+          <div className="bg-white rounded-3xl border border-gray-200 p-6">
+
+  <h2 className="text-2xl font-bold text-black">
+    Today's Progress
+  </h2>
+
+  <p className="text-gray-500 mt-2">
+    Medication compliance tracker
+  </p>
+
+  <div className="mt-6">
+
+    <div className="w-full bg-gray-200 rounded-full h-4">
+
+      <div
+        className="bg-green-600 h-4 rounded-full"
+        style={{
+          width: `${compliance}%`,
+        }}
+      />
+
+    </div>
+
+    <p className="mt-4 text-lg font-semibold text-black">
+      {takenCount} / {totalCount} Medicines Taken
+    </p>
+
+    <p className="text-green-600 font-bold text-xl">
+      {compliance}%
+    </p>
+
+  </div>
+
+</div>
 
           <h2 className="text-2xl font-bold text-black">
             Medicine Reminders
