@@ -240,6 +240,38 @@ else {
   reader.readAsDataURL(prescriptionImage);
 }
 
+async function handleSaveAiMedicines() {
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return;
+
+  const medicinesToInsert = aiMedicines.map((med) => ({
+    user_id: user.id,
+    medicine_name: med.medicine_name,
+    dosage: med.dosage,
+    timing: med.timing,
+  }));
+
+  const { error } = await supabase
+    .from("medicines")
+    .insert(medicinesToInsert);
+
+  if (error) {
+
+    alert(error.message);
+
+  } else {
+
+    alert("Medicines saved successfully!");
+
+    loadMedicines();
+
+  }
+}
+
 function handleEditMedicine(medicine: any) {
 
   setMedicineName(medicine.medicine_name);
@@ -446,32 +478,43 @@ return () => clearInterval(interval);
 
 {aiMedicines.length > 0 && (
 
-  <div className="mt-6 space-y-3">
+  <>
+    <div className="mt-6 space-y-3">
 
-    {aiMedicines.map((medicine, index) => (
+      {aiMedicines.map((medicine, index) => (
 
-      <div
-        key={index}
-        className="bg-red-50 border border-red-200 rounded-2xl p-4"
-      >
+        <div
+          key={index}
+          className="bg-red-50 border border-red-200 rounded-2xl p-4"
+        >
 
-        <p className="font-bold text-red-700">
-  {medicine.medicine_name}
-</p>
+          <p className="font-bold text-red-700">
+    {medicine.medicine_name}
+  </p>
 
-<p className="text-gray-700">
-  {medicine.dosage}
-</p>
+  <p className="text-gray-700">
+    {medicine.dosage}
+  </p>
 
-<p className="text-red-600 font-medium">
-  {medicine.timing}
-</p>
+  <p className="text-red-600 font-medium">
+    {medicine.timing}
+  </p>
 
-      </div>
+        </div>
 
-    ))}
+        
 
-  </div>
+      ))}
+
+    </div>
+    
+  <button
+    onClick={handleSaveAiMedicines}
+    className="w-full bg-green-600 text-white py-4 rounded-2xl font-semibold mt-4"
+  >
+    💾 Save All Medicines
+  </button>
+  </>
 
 )}
 
