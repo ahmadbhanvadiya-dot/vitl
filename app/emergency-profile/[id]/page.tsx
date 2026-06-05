@@ -8,14 +8,15 @@ export default async function EmergencyProfilePage({
 
   const { id } = params;
   
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", id)
-    .single();
+  const { data: profile, error } = await supabase
+  .from("profiles")
+  .select("*")
+  .eq("id", id)
+  .single();
 
-    console.log("QR User ID:", id);
+console.log("ID:", id);
 console.log("Profile:", profile);
+console.log("Error:", error);
 
     const { data: medicines, error: medicinesError } = await supabase
   .from("medicines")
