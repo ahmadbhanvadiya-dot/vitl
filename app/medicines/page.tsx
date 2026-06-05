@@ -221,6 +221,27 @@ function handleEditMedicine(medicine: any) {
   setEditingId(medicine.id);
 }
 
+const takenCount = medicines.filter((medicine) => medicine.taken_today).length;
+
+async function handleMarkTaken(id: any) {
+  const { error } = await supabase
+    .from("medicines")
+    .update({ taken_today: true })
+    .eq("id", id);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  setMedicines((prev) =>
+    prev.map((medicine) =>
+      medicine.id === id
+        ? { ...medicine, taken_today: true }
+        : medicine
+    )
+  );
+}
 
 return (
 
@@ -424,23 +445,19 @@ return (
           💊 {medicine.medicine_name}
         </h3>
 
-        <p className="text-gray-700 mt-2">
-          Dose: {medicine.dosage}
-        </p>
-
-        <p className="text-red-600 font-semibold mt-2">
-          ⏰ {medicine.timing}
-        </p>
-
         <p
-          className={
-            medicine.taken_today
-              ? "text-green-600 font-semibold mt-2"
-              : "text-orange-600 font-semibold mt-2"
-          }
-        >
+  className={
+    medicine.taken_today
+      ? "text-green-600 font-semibold mt-2"
+      : "text-orange-600 font-semibold mt-2"
+  }
+>
+  {medicine.taken_today
+    ? "✅ Taken Today"
+    : "⏳ Not Taken"}
+</p>
 
-          {!medicine.taken_today && (
+{!medicine.taken_today && (
 
   <button
     onClick={() => handleMarkTaken(medicine.id)}
@@ -450,11 +467,13 @@ return (
   </button>
 
 )}
-          {medicine.taken_today
-            ? "✅ Taken Today"
-            : "⏳ Not Taken"}
-        </p>
 
+<button
+  onClick={() => handleEditMedicine(medicine)}
+  className="mt-3 w-full bg-blue-600 text-white py-3 rounded-xl font-semibold"
+>
+  ✏️ Edit
+</button>
       </div>
 
     ))}
