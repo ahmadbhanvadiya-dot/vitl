@@ -28,24 +28,31 @@ export default function BottomNav() {
       </Link>
 
       <Link
-        href="/qr"
-        className="flex flex-col items-center text-gray-500"
-      >
-        <QrCode size={22} />
-        <span className="text-xs mt-1">
-          QR
-        </span>
-      </Link>
+  href="/qr"
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textDecoration: "none",
+  }}
+>
 
-      <Link
-        href="/profile"
-        className="flex flex-col items-center text-gray-500"
-      >
-        <User size={22} />
-        <span className="text-xs mt-1">
-          Profile
-        </span>
-      </Link>
+  <QrCode
+    size={24}
+    color="#4b5563"
+  />
+
+  <span
+    style={{
+      fontSize: "12px",
+      marginTop: "4px",
+      color: "#4b5563",
+    }}
+  >
+    QR
+  </span>
+
+</Link>
 
     </div>
   );
