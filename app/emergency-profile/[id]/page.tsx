@@ -19,11 +19,6 @@ export default async function EmergencyProfilePage({
   .select("*")
   .eq("user_id", id);
 
-console.log("ID:", id);
-console.log("Medicines:", medicines);
-console.log("Medicines Error:", medicinesError);
-
-
   if (!profile) {
 
     return (
@@ -81,6 +76,17 @@ console.log("Medicines Error:", medicinesError);
         </div>
 
         <div className="bg-white rounded-b-3xl border border-gray-200 p-6">
+          <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-4 mb-6">
+
+  <p className="text-yellow-800 font-semibold">
+    ⚠️ Emergency Information
+  </p>
+
+  <p className="text-yellow-700 text-sm mt-1">
+    This information has been shared by the patient for emergency use.
+  </p>
+
+</div>
 
           <div className="bg-red-50 border border-red-200 rounded-3xl p-6 text-center">
 
@@ -138,9 +144,6 @@ console.log("Medicines Error:", medicinesError);
     Current Medicines
   </p>
 
-  <p className="text-black font-bold mt-2">
-    Medicines found: {medicines?.length || 0}
-  </p>
 
   <div className="mt-3 space-y-3">
 
@@ -149,31 +152,39 @@ console.log("Medicines Error:", medicinesError);
       medicines.map((medicine) => (
 
         <div
-          key={medicine.id}
-          className="bg-white rounded-xl p-3"
-        >
+  key={medicine.id}
+  className="bg-white border border-gray-200 rounded-2xl p-4"
+>
 
-          <p className="font-semibold text-black">
-            {medicine.medicine_name}
-          </p>
+  <p className="text-lg font-bold text-black">
+    💊 {medicine.medicine_name}
+  </p>
 
-          <p className="text-sm text-gray-600">
-            {medicine.dosage}
-          </p>
+  <p className="text-gray-600 mt-2">
+    Dose: {medicine.dosage}
+  </p>
 
-          <p className="text-sm text-red-700">
-            {medicine.timing}
-          </p>
+  <p className="text-red-700 font-medium mt-1">
+    ⏰ {medicine.timing}
+  </p>
 
-        </div>
+</div>
 
       ))
 
     ) : (
 
-      <p className="text-gray-500">
-        No medicines listed
-      </p>
+      <div className="bg-white rounded-2xl p-4 text-center">
+
+  <div className="text-3xl">
+    💊
+  </div>
+
+  <p className="text-gray-500 mt-2">
+    No medicines have been added.
+  </p>
+
+</div>
 
     )}
 
