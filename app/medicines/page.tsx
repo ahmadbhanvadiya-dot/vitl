@@ -15,6 +15,7 @@ const [medicineName, setMedicineName] = useState("");
 const [dosage, setDosage] = useState("");
 const [timing, setTiming] = useState("");
 const [reminderTime, setReminderTime] = useState("");
+const [editingId, setEditingId] = useState<string | null>(null);
 
 useEffect(() => {
 
@@ -148,37 +149,77 @@ async function handleAddMedicine() {
 
   if (!user) return;
 
-  const { error } = await supabase
-    .from("medicines")
-    .insert({
-      user_id: user.id,
-      medicine_name: medicineName,
-      dosage: dosage,
-      timing: timing,
-      reminder_time: reminderTime,
-      taken_today: false,
-    });
+  if (editingId) {
 
-  if (error) {
+    const { error } = await supabase
+      .from("medicines")
+      .update({
+        medicine_name: medicineName,
+        dosage,
+        timing,
+        reminder_time: reminderTime,
+      })
+      .eq("id", editingId);
 
-    alert(error.message);
+    if (error) {
+
+      alert(error.message);
+
+    } else {
+
+      alert("Medicine updated!");
+
+      setEditingId(null);
+
+      setMedicineName("");
+      setDosage("");
+      setTiming("");
+      setReminderTime("");
+
+      window.location.reload();
+    }
 
   } else {
 
-    alert("Medicine added!");
+    const { error } = await supabase
+      .from("medicines")
+      .insert({
+        user_id: user.id,
+        medicine_name: medicineName,
+        dosage,
+        timing,
+        reminder_time: reminderTime,
+        taken_today: false,
+      });
 
-    setMedicineName("");
-    setDosage("");
-    setTiming("");
-    setReminderTime("");
+    if (error) {
 
-    window.location.reload();
+      alert(error.message);
+
+    } else {
+
+      alert("Medicine added!");
+
+      setMedicineName("");
+      setDosage("");
+      setTiming("");
+      setReminderTime("");
+
+      window.location.reload();
+    }
+
   }
 }
 
-const takenCount = medicines.filter(
-(medicine) => medicine.taken_today
-).length;
+function handleEditMedicine(medicine: any) {
+
+  setMedicineName(medicine.medicine_name);
+  setDosage(medicine.dosage);
+  setTiming(medicine.timing);
+  setReminderTime(medicine.reminder_time || "");
+
+  setEditingId(medicine.id);
+}
 
 
 return (
@@ -314,7 +355,9 @@ return (
       value={timing}
       onChange={(e) => setTiming(e.target.value)}
       className="w-full p-4 rounded-2xl border border-gray-200 text-black"
-    />
+    /> 
+
+    
 
     <input
       type="time"
@@ -396,6 +439,17 @@ return (
               : "text-orange-600 font-semibold mt-2"
           }
         >
+
+          {!medicine.taken_today && (
+
+  <button
+    onClick={() => handleMarkTaken(medicine.id)}
+    className="mt-4 w-full bg-green-600 text-white py-3 rounded-xl font-semibold"
+  >
+    ✅ Mark Taken
+  </button>
+
+)}
           {medicine.taken_today
             ? "✅ Taken Today"
             : "⏳ Not Taken"}
