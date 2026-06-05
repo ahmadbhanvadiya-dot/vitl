@@ -1,12 +1,11 @@
 import { supabase } from "../../../lib/supabase";
 
-export default async function EmergencyProfilePage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function EmergencyProfilePage(props: any) {
 
-  const { id } = params;
+  const id = props?.params?.id;
+
+  console.log("RAW PARAMS:", props.params);
+  console.log("ID:", id);
   
   const { data: profile, error } = await supabase
   .from("profiles")
