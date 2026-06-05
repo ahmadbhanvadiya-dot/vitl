@@ -14,6 +14,9 @@ export default async function EmergencyProfilePage({
     .eq("id", id)
     .single();
 
+    console.log("QR User ID:", id);
+console.log("Profile:", profile);
+
     const { data: medicines, error: medicinesError } = await supabase
   .from("medicines")
   .select("*")
