@@ -14,7 +14,7 @@ export default async function EmergencyProfilePage({
   .eq("id", id)
   .single();
 
-
+console.log("ID:", id);
 console.log("Profile:", profile);
 console.log("Error:", error);
 
