@@ -243,6 +243,31 @@ async function handleMarkTaken(id: any) {
   );
 }
 
+async function handleDeleteMedicine(id: string) {
+
+  const confirmed = confirm(
+    "Delete this medicine?"
+  );
+
+  if (!confirmed) return;
+
+  const { error } = await supabase
+    .from("medicines")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+
+    alert(error.message);
+
+  } else {
+
+    window.location.reload();
+
+  }
+
+}
+
 return (
 
 <main className="min-h-screen bg-gray-100 px-4 py-8 pb-28 flex justify-center">
@@ -473,6 +498,13 @@ return (
   className="mt-3 w-full bg-blue-600 text-white py-3 rounded-xl font-semibold"
 >
   ✏️ Edit
+</button>
+
+<button
+  onClick={() => handleDeleteMedicine(medicine.id)}
+  className="mt-3 w-full bg-red-600 text-white py-3 rounded-xl font-semibold"
+>
+  🗑️ Delete
 </button>
       </div>
 
