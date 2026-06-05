@@ -3,10 +3,10 @@ import { supabase } from "../../../lib/supabase";
 export default async function EmergencyProfilePage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
 
-  const { id } = await params;
+  const { id } = params;
 
   const { data: profile } = await supabase
     .from("profiles")

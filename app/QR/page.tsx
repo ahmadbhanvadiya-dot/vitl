@@ -42,6 +42,9 @@ export default function QRPage() {
           <h1 className="text-3xl font-bold text-red-700 text-center">
             Emergency QR
           </h1>
+          <p className="mt-4 text-xs text-black break-all">
+  {qrValue}
+</p>
 
           <p className="text-gray-500 text-center mt-2">
             Share this QR during emergencies
