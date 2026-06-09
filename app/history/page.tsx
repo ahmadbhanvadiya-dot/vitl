@@ -165,23 +165,23 @@ export default function HistoryPage() {
         history.map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-2xl border border-gray-200 p-4"
+            className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm"
           >
             <div className="flex justify-between items-center">
-              <p className="font-semibold">
+              <p className="font-semibold text-gray-900 text-lg">
                 {item.status === "taken"
                   ? "✅ Taken"
                   : "❌ Missed"}
               </p>
 
-              <span className="text-xs text-gray-500">
+              <span className="text-sm text-gray-700 font-medium">
                 {new Date(
                   item.taken_at
                 ).toLocaleDateString()}
               </span>
             </div>
 
-            <p className="text-sm mt-2">
+            <p className="text-sm text-gray-600 mt-2">
               {new Date(
                 item.taken_at
               ).toLocaleTimeString([], {
