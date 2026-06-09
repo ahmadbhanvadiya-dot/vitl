@@ -211,11 +211,14 @@ export default function HistoryPage() {
           />
 
           <button
-            onClick={uploadPrescription}
-            className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-2xl font-semibold transition"
-          >
-            Upload Prescription
-          </button>
+  onClick={() => {
+    alert("Button clicked");
+    uploadPrescription();
+  }}
+  className="mt-4 w-full bg-red-600 text-white py-3 rounded-2xl font-semibold"
+>
+  Upload Prescription
+</button>
         </div>
 
         {prescriptions.map((prescription) => (
