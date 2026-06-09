@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase";
 export default function HistoryPage() {
   const [history, setHistory] = useState<any[]>([]);
   const [adherence, setAdherence] = useState(0);
-  const [file, setFile] = useState<File | null>(null);
+  
   const [prescriptions, setPrescriptions] = useState<any[]>([]);
 
   useEffect(() => {
@@ -55,27 +55,21 @@ export default function HistoryPage() {
     setPrescriptions(data || []);
   }
 
-  async function uploadPrescription() {
-  alert("Upload function started");
-
-  if (!file) {
-    alert("No file selected");
-    return;
-  }
-
-  alert(`File selected: ${file.name}`);
-
+  async function uploadPrescription(selectedFile: File) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  alert(`User: ${user?.id}`);
+  if (!user) {
+    alert("User not found");
+    return;
+  }
 
-  const filePath = `${user?.id}/${Date.now()}-${file.name}`;
+  const filePath = `${user.id}/${Date.now()}-${selectedFile.name}`;
 
   const { error: uploadError } = await supabase.storage
     .from("prescriptions")
-    .upload(filePath, file);
+    .upload(filePath, selectedFile);
 
   if (uploadError) {
     alert(uploadError.message);
@@ -83,22 +77,29 @@ export default function HistoryPage() {
     return;
   }
 
-  alert("File uploaded to storage");
-
   const { data } = supabase.storage
     .from("prescriptions")
     .getPublicUrl(filePath);
 
-  await supabase
+  const { error: insertError } = await supabase
     .from("prescriptions")
     .insert({
-      user_id: user?.id,
+      user_id: user.id,
       file_url: data.publicUrl,
-      file_name: file.name,
+      file_name: selectedFile.name,
     });
 
+  if (insertError) {
+    alert(insertError.message);
+    console.error(insertError);
+    return;
+  }
+
   alert("Prescription uploaded!");
+
+  fetchPrescriptions();
 }
+
   const takenCount = history.filter(
     (item) => item.status === "taken"
   ).length;
@@ -203,9 +204,6 @@ export default function HistoryPage() {
 
       {/* Prescription Vault */}
 
-      <p className="text-sm text-blue-600">
-  Current file: {file ? file.name : "NONE"}
-</p>
 
       <div className="mt-8">
         <h2 className="text-xl font-bold text-gray-900 mb-4">
@@ -213,36 +211,19 @@ export default function HistoryPage() {
 </h2>
 
         <div className="bg-white rounded-2xl border border-gray-200 p-4">
-          <input
-  type="file"
-  accept="image/*,.pdf"
-  className="text-gray-700 w-full"
-  onChange={(e) => {
-    const selectedFile = e.target.files?.[0] || null;
+  <input
+    type="file"
+    accept="image/*,.pdf"
+    className="text-gray-700 w-full"
+    onChange={async (e) => {
+      const selectedFile = e.target.files?.[0];
 
-    console.log("Selected:", selectedFile);
-    alert(
-      selectedFile
-        ? `Selected: ${selectedFile.name}`
-        : "No file selected"
-    );
+      if (!selectedFile) return;
 
-    setFile(selectedFile);
-  }}
-/>
-
-<button
-  onClick={async () => {
-    console.log("FILE STATE:", file);
-    alert(file ? file.name : "FILE IS NULL");
-    await uploadPrescription();
-  }}
-  className="mt-4 w-full bg-red-600 text-white py-3 rounded-2xl font-semibold"
->
-  Upload Prescription
-</button>
-
-        </div>
+      await uploadPrescription(selectedFile);
+    }}
+  />
+</div>
 
         {prescriptions.map((prescription) => (
           <div
