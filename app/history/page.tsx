@@ -102,26 +102,32 @@ export default function HistoryPage() {
   return (
     <main className="min-h-screen bg-gray-100 px-4 py-8 pb-28 flex justify-center">
   <div className="w-full max-w-md space-y-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-4">
-        Medicine History
-      </h1>
+      <div>
+  <h1 className="text-4xl font-bold text-red-700">
+    History
+  </h1>
+
+  <p className="text-gray-500 mt-2">
+    Track medicines and prescriptions
+  </p>
+</div>
 
       {/* Analytics Card */}
-      <div className="bg-white rounded-2xl shadow">
+      <div className="bg-white rounded-3xl border border-gray-200 p-6">
         <h2 className="text-gray-600 text-sm">
           Adherence Rate
         </h2>
 
-        <p className="font-bold text-lg text-white">
-          {adherence}%
-        </p>
+        <p className="text-4xl font-bold text-green-600 mt-2">
+  {adherence}%
+</p>
 
         <div className="flex justify-between mt-4">
           <div>
             <p className="text-gray-500 text-sm">
               Taken
             </p>
-            <p className="font-bold text-lg">
+            <p className="font-bold text-2xl text-gray-900">
               {takenCount}
             </p>
           </div>
@@ -130,7 +136,7 @@ export default function HistoryPage() {
             <p className="text-gray-500 text-sm">
               Missed
             </p>
-            <p className="font-bold text-lg">
+            <p className="font-bold text-2xl text-gray-900">
               {missedCount}
             </p>
           </div>
@@ -139,7 +145,7 @@ export default function HistoryPage() {
             <p className="text-gray-500 text-sm">
               Total
             </p>
-            <p className="font-bold text-lg">
+            <p className="font-bold text-2xl text-gray-900">
               {history.length}
             </p>
           </div>
@@ -159,7 +165,7 @@ export default function HistoryPage() {
         history.map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-xl shadow p-4 mb-3"
+            className="bg-white rounded-2xl border border-gray-200 p-4"
           >
             <div className="flex justify-between items-center">
               <p className="font-semibold">
@@ -193,11 +199,11 @@ export default function HistoryPage() {
   📄 Prescription Vault
 </h2>
 
-        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 mb-4">
+        <div className="bg-white rounded-2xl border border-gray-200 p-4">
           <input
             type="file"
             accept="image/*,.pdf"
-            className="text-white"
+            className="text-gray-700 w-full"
             onChange={(e) =>
               setFile(e.target.files?.[0] || null)
             }
@@ -205,7 +211,7 @@ export default function HistoryPage() {
 
           <button
             onClick={uploadPrescription}
-            className="mt-3 bg-red-600 text-white px-4 py-2 rounded-lg"
+            className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-2xl font-semibold transition"
           >
             Upload Prescription
           </button>
@@ -214,7 +220,7 @@ export default function HistoryPage() {
         {prescriptions.map((prescription) => (
           <div
             key={prescription.id}
-            className="bg-white rounded-xl shadow p-4 mb-3"
+           className="bg-white rounded-2xl border border-gray-200 p-4 mb-3"
           >
             <p className="font-semibold">
               {prescription.file_name}
@@ -230,7 +236,7 @@ export default function HistoryPage() {
               href={prescription.file_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-red-600 font-medium"
+              className="inline-block mt-2 text-red-600 font-semibold"
             >
               View Prescription
             </a>
