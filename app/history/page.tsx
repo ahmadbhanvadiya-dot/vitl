@@ -56,43 +56,49 @@ export default function HistoryPage() {
   }
 
   async function uploadPrescription() {
-    alert("Upload function started");
-    
-    if (!file) return;
+  alert("Upload function started");
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    const filePath = `${user?.id}/${Date.now()}-${file.name}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from("prescriptions")
-      .upload(filePath, file);
-
-    if (uploadError) {
-      alert(uploadError.message);
-      return;
-    }
-
-    const { data } = supabase.storage
-      .from("prescriptions")
-      .getPublicUrl(filePath);
-
-    await supabase
-      .from("prescriptions")
-      .insert({
-        user_id: user?.id,
-        file_url: data.publicUrl,
-        file_name: file.name,
-      });
-
-    alert("Prescription uploaded!");
-
-    setFile(null);
-    fetchPrescriptions();
+  if (!file) {
+    alert("No file selected");
+    return;
   }
 
+  alert(`File selected: ${file.name}`);
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  alert(`User: ${user?.id}`);
+
+  const filePath = `${user?.id}/${Date.now()}-${file.name}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from("prescriptions")
+    .upload(filePath, file);
+
+  if (uploadError) {
+    alert(uploadError.message);
+    console.error(uploadError);
+    return;
+  }
+
+  alert("File uploaded to storage");
+
+  const { data } = supabase.storage
+    .from("prescriptions")
+    .getPublicUrl(filePath);
+
+  await supabase
+    .from("prescriptions")
+    .insert({
+      user_id: user?.id,
+      file_url: data.publicUrl,
+      file_name: file.name,
+    });
+
+  alert("Prescription uploaded!");
+}
   const takenCount = history.filter(
     (item) => item.status === "taken"
   ).length;
