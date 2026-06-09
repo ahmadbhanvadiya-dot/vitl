@@ -17,10 +17,10 @@ export default function BottomNav() {
       </span>
     </Link>
 
-    <Link
-      href="/medicines"
-      className="flex flex-col items-center text-gray-500"
-    >
+      <Link
+        href="/medicines"
+        className="flex flex-col items-center text-gray-500"
+      >
       <Pill size={22} />
       <span className="text-xs mt-1">
         Medicines
@@ -36,6 +36,15 @@ export default function BottomNav() {
         QR
       </span>
     </Link>
+
+    
+  <Link href="/history">
+  <button className="flex flex-col items-center">
+    <span>📜</span>
+    <span>History</span>
+  </button>
+</Link>
+  
 
     <Link
       href="/profile"
