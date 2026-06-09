@@ -211,11 +211,23 @@ export default function HistoryPage() {
         <div className="bg-white rounded-2xl border border-gray-200 p-4">
   <input
   type="file"
-  onClick={() => alert("Input clicked")}
+  accept="image/*,.pdf"
+  className="text-gray-700 w-full"
   onChange={(e) => {
-    alert("File selected");
+    const selectedFile = e.target.files?.[0] || null;
+
+    console.log("Selected file:", selectedFile);
+    setFile(selectedFile);
+
+    setTimeout(() => {
+      console.log("File state should be set");
+    }, 100);
   }}
 />
+<p className="text-sm text-blue-600 mt-2">
+  File State: {file ? file.name : "NULL"}
+</p>
+
 </div>
 
 <button
