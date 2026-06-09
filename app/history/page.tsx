@@ -209,8 +209,7 @@ export default function HistoryPage() {
               setFile(e.target.files?.[0] || null)
             }
           />
-
-          <button
+<button
   onClick={() => {
     alert("Button clicked");
     uploadPrescription();
