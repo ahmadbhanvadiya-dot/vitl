@@ -56,6 +56,7 @@ export default function HistoryPage() {
   }
 
   async function uploadPrescription() {
+     console.log("Selected file:", file);
     if (!file) return;
 
     const {
