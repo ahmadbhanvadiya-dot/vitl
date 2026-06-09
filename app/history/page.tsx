@@ -100,14 +100,14 @@ export default function HistoryPage() {
   ).length;
 
   return (
-    <div className="p-4 pb-24">
-      <h1 className="text-2xl font-bold mb-4">
+    <div className="min-h-screen bg-white p-4 pb-24">
+      <h1 className="text-2xl font-bold text-gray-900 mb-4">
         Medicine History
       </h1>
 
       {/* Analytics Card */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl shadow p-5 mb-5">
-        <h2 className="text-gray-300 text-sm">
+      <div className="bg-white rounded-2xl shadow">
+        <h2 className="text-gray-600 text-sm">
           Adherence Rate
         </h2>
 
@@ -117,7 +117,7 @@ export default function HistoryPage() {
 
         <div className="flex justify-between mt-4">
           <div>
-            <p className="text-gray-300 text-sm">
+            <p className="text-gray-500 text-sm">
               Taken
             </p>
             <p className="font-bold text-lg">
@@ -126,7 +126,7 @@ export default function HistoryPage() {
           </div>
 
           <div>
-            <p className="text-gray-300 text-sm">
+            <p className="text-gray-500 text-sm">
               Missed
             </p>
             <p className="font-bold text-lg">
@@ -135,7 +135,7 @@ export default function HistoryPage() {
           </div>
 
           <div>
-            <p className="text-gray-300 text-sm">
+            <p className="text-gray-500 text-sm">
               Total
             </p>
             <p className="font-bold text-lg">
@@ -146,12 +146,12 @@ export default function HistoryPage() {
       </div>
 
       {/* Medicine History */}
-      <h2 className="text-xl font-bold mb-3">
-        💊 Medicine Activity
-      </h2>
+      <h2 className="text-xl font-bold text-gray-900 mb-3">
+  💊 Medicine Activity
+</h2>
 
       {history.length === 0 ? (
-        <div className="text-center text-gray-300 mt-4 mb-8">
+        <div className="text-center text-gray-500 mt-4 mb-8">
           No medicine history yet.
         </div>
       ) : (
@@ -167,7 +167,7 @@ export default function HistoryPage() {
                   : "❌ Missed"}
               </p>
 
-              <span className="text-xs text-gray-300">
+              <span className="text-xs text-gray-500">
                 {new Date(
                   item.taken_at
                 ).toLocaleDateString()}
@@ -188,9 +188,9 @@ export default function HistoryPage() {
 
       {/* Prescription Vault */}
       <div className="mt-8">
-        <h2 className="text-xl font-bold mb-4">
-          📄 Prescription Vault
-        </h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-4">
+  📄 Prescription Vault
+</h2>
 
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 mb-4">
           <input
@@ -219,7 +219,7 @@ export default function HistoryPage() {
               {prescription.file_name}
             </p>
 
-            <p className="text-sm text-gray-300 mt-1">
+            <p className="text-sm text-gray-500 mt-1">
               {new Date(
                 prescription.uploaded_at
               ).toLocaleDateString()}
