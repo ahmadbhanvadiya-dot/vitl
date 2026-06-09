@@ -245,9 +245,10 @@ async function handleMarkTaken(id: any) {
       taken_at: new Date().toISOString(),
     });
 
-  if (historyError) {
-    console.error(historyError);
-  }
+ if (historyError) {
+  console.error(historyError);
+  alert(historyError.message);
+}
 
   setMedicines((prev) =>
     prev.map((medicine) =>
