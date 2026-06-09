@@ -6,7 +6,8 @@ import { supabase } from "@/lib/supabase";
 export default function HistoryPage() {
   const [history, setHistory] = useState<any[]>([]);
   const [adherence, setAdherence] = useState(0);
-  
+  const [file, setFile] = useState<File | null>(null);
+ 
   const [prescriptions, setPrescriptions] = useState<any[]>([]);
 
   useEffect(() => {
@@ -73,7 +74,6 @@ export default function HistoryPage() {
 
   if (uploadError) {
     alert(uploadError.message);
-    console.error(uploadError);
     return;
   }
 
@@ -91,15 +91,12 @@ export default function HistoryPage() {
 
   if (insertError) {
     alert(insertError.message);
-    console.error(insertError);
     return;
   }
 
   alert("Prescription uploaded!");
-
   fetchPrescriptions();
 }
-
   const takenCount = history.filter(
     (item) => item.status === "taken"
   ).length;
@@ -204,6 +201,7 @@ export default function HistoryPage() {
 
       {/* Prescription Vault */}
 
+    
 
       <div className="mt-8">
         <h2 className="text-xl font-bold text-gray-900 mb-4">
@@ -212,18 +210,29 @@ export default function HistoryPage() {
 
         <div className="bg-white rounded-2xl border border-gray-200 p-4">
   <input
-    type="file"
-    accept="image/*,.pdf"
-    className="text-gray-700 w-full"
-    onChange={async (e) => {
-      const selectedFile = e.target.files?.[0];
-
-      if (!selectedFile) return;
-
-      await uploadPrescription(selectedFile);
-    }}
-  />
+  type="file"
+  onClick={() => alert("Input clicked")}
+  onChange={(e) => {
+    alert("File selected");
+  }}
+/>
 </div>
+
+<button
+  onClick={() => {
+    if (!file) {
+      alert("Please select a file first");
+      return;
+    }
+
+    uploadPrescription(file);
+  }}
+  className="mt-4 w-full bg-red-600 text-white py-3 rounded-2xl font-semibold"
+>
+  Upload Prescription
+</button>
+
+        </div>
 
         {prescriptions.map((prescription) => (
           <div
@@ -251,7 +260,6 @@ export default function HistoryPage() {
           </div>
         ))}
       </div>
-    </div>
     </main>
   );
 }
