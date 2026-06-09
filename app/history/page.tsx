@@ -202,6 +202,11 @@ export default function HistoryPage() {
       )}
 
       {/* Prescription Vault */}
+
+      <p className="text-sm text-blue-600">
+  Current file: {file ? file.name : "NONE"}
+</p>
+
       <div className="mt-8">
         <h2 className="text-xl font-bold text-gray-900 mb-4">
   📄 Prescription Vault
