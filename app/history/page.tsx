@@ -106,18 +106,18 @@ export default function HistoryPage() {
       </h1>
 
       {/* Analytics Card */}
-      <div className="bg-white rounded-2xl shadow p-5 mb-5">
-        <h2 className="text-gray-500 text-sm">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl shadow p-5 mb-5">
+        <h2 className="text-gray-300 text-sm">
           Adherence Rate
         </h2>
 
-        <p className="text-4xl font-bold text-green-600 mt-2">
+        <p className="font-bold text-lg text-white">
           {adherence}%
         </p>
 
         <div className="flex justify-between mt-4">
           <div>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-300 text-sm">
               Taken
             </p>
             <p className="font-bold text-lg">
@@ -126,7 +126,7 @@ export default function HistoryPage() {
           </div>
 
           <div>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-300 text-sm">
               Missed
             </p>
             <p className="font-bold text-lg">
@@ -135,7 +135,7 @@ export default function HistoryPage() {
           </div>
 
           <div>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-300 text-sm">
               Total
             </p>
             <p className="font-bold text-lg">
@@ -151,7 +151,7 @@ export default function HistoryPage() {
       </h2>
 
       {history.length === 0 ? (
-        <div className="text-center text-gray-500 mt-4 mb-8">
+        <div className="text-center text-gray-300 mt-4 mb-8">
           No medicine history yet.
         </div>
       ) : (
@@ -167,14 +167,14 @@ export default function HistoryPage() {
                   : "❌ Missed"}
               </p>
 
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-gray-300">
                 {new Date(
                   item.taken_at
                 ).toLocaleDateString()}
               </span>
             </div>
 
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm mt-2">
               {new Date(
                 item.taken_at
               ).toLocaleTimeString([], {
@@ -192,10 +192,11 @@ export default function HistoryPage() {
           📄 Prescription Vault
         </h2>
 
-        <div className="bg-white rounded-xl shadow p-4 mb-4">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 mb-4">
           <input
             type="file"
             accept="image/*,.pdf"
+            className="text-white"
             onChange={(e) =>
               setFile(e.target.files?.[0] || null)
             }
@@ -218,7 +219,7 @@ export default function HistoryPage() {
               {prescription.file_name}
             </p>
 
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-300 mt-1">
               {new Date(
                 prescription.uploaded_at
               ).toLocaleDateString()}
