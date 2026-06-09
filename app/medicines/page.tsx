@@ -235,6 +235,7 @@ async function handleMarkTaken(id: any) {
     alert(error.message);
     return;
   }
+console.log("Medicine ID:", id); 
 
   const { error: historyError } = await supabase
     .from("medicine_history")
