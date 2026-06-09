@@ -6,6 +6,8 @@ import { supabase } from "@/lib/supabase";
 export default function HistoryPage() {
   const [history, setHistory] = useState<any[]>([]);
   const [adherence, setAdherence] = useState(0);
+  const [file, setFile] = useState<File | null>(null);
+const [prescriptions, setPrescriptions] = useState<any[]>([]);
 
   useEffect(() => {
     fetchHistory();
@@ -45,6 +47,61 @@ export default function HistoryPage() {
   const missedCount = history.filter(
     (item) => item.status === "missed"
   ).length;
+
+async function uploadPrescription() {
+  if (!file) return;
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const filePath = `${user?.id}/${Date.now()}-${file.name}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from("prescriptions")
+    .upload(filePath, file);
+
+  if (uploadError) {
+    alert(uploadError.message);
+    return;
+  }
+
+  const { data } = supabase.storage
+    .from("prescriptions")
+    .getPublicUrl(filePath);
+
+  await supabase
+    .from("prescriptions")
+    .insert({
+      user_id: user?.id,
+      file_url: data.publicUrl,
+      file_name: file.name,
+    });
+
+  alert("Prescription uploaded!");
+
+  fetchPrescriptions();
+}
+
+useEffect(() => {
+  fetchHistory();
+  fetchPrescriptions();
+}, []);
+
+async function fetchPrescriptions() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data } = await supabase
+    .from("prescriptions")
+    .select("*")
+    .eq("user_id", user?.id)
+    .order("uploaded_at", { ascending: false });
+
+  setPrescriptions(data || []);
+}
+
 
   return (
     <div className="p-4 pb-24">
@@ -125,6 +182,55 @@ export default function HistoryPage() {
                 minute: "2-digit",
               })}
             </p>
+
+            <div className="mt-8">
+  <h2 className="text-xl font-bold mb-4">
+    📄 Prescription Vault
+  </h2>
+
+  <div className="bg-white rounded-xl shadow p-4 mb-4">
+    <input
+      type="file"
+      accept="image/*,.pdf"
+      onChange={(e) =>
+        setFile(e.target.files?.[0] || null)
+      }
+    />
+
+    <button
+      onClick={uploadPrescription}
+      className="mt-3 bg-red-600 text-white px-4 py-2 rounded-lg"
+    >
+      Upload Prescription
+    </button>
+  </div>
+
+  {prescriptions.map((prescription) => (
+    <div
+      key={prescription.id}
+      className="bg-white rounded-xl shadow p-4 mb-3"
+    >
+      <p className="font-semibold">
+        {prescription.file_name}
+      </p>
+
+      <p className="text-sm text-gray-500">
+        {new Date(
+          prescription.uploaded_at
+        ).toLocaleDateString()}
+      </p>
+
+      <a
+        href={prescription.file_url}
+        target="_blank"
+        className="text-red-600 font-medium"
+      >
+        View Prescription
+      </a>
+    </div>
+  ))}
+</div>
+
           </div>
         ))
       )}
