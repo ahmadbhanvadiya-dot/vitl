@@ -232,14 +232,16 @@ export default function HistoryPage() {
 />
 
 <button
-  onClick={() => {
-    alert("Button clicked");
-    uploadPrescription();
+  onClick={async () => {
+    console.log("FILE STATE:", file);
+    alert(file ? file.name : "FILE IS NULL");
+    await uploadPrescription();
   }}
   className="mt-4 w-full bg-red-600 text-white py-3 rounded-2xl font-semibold"
 >
   Upload Prescription
 </button>
+
         </div>
 
         {prescriptions.map((prescription) => (
