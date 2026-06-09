@@ -224,6 +224,8 @@ function handleEditMedicine(medicine: any) {
 const takenCount = medicines.filter((medicine) => medicine.taken_today).length;
 
 async function handleMarkTaken(id: any) {
+  const { data: { user } } = await supabase.auth.getUser();
+
   const { error } = await supabase
     .from("medicines")
     .update({ taken_today: true })
@@ -234,6 +236,19 @@ async function handleMarkTaken(id: any) {
     return;
   }
 
+  const { error: historyError } = await supabase
+    .from("medicine_history")
+    .insert({
+      user_id: user?.id,
+      medicine_id: id,
+      status: "taken",
+      taken_at: new Date().toISOString(),
+    });
+
+  if (historyError) {
+    console.error(historyError);
+  }
+
   setMedicines((prev) =>
     prev.map((medicine) =>
       medicine.id === id
@@ -241,7 +256,7 @@ async function handleMarkTaken(id: any) {
         : medicine
     )
   );
-}
+} 
 
 async function handleDeleteMedicine(id: string) {
 
