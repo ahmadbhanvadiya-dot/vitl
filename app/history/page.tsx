@@ -100,7 +100,8 @@ export default function HistoryPage() {
   ).length;
 
   return (
-    <div className="min-h-screen bg-white p-4 pb-24">
+    <main className="min-h-screen bg-gray-100 px-4 py-8 pb-28 flex justify-center">
+  <div className="w-full max-w-md space-y-8">
       <h1 className="text-2xl font-bold text-gray-900 mb-4">
         Medicine History
       </h1>
@@ -237,5 +238,6 @@ export default function HistoryPage() {
         ))}
       </div>
     </div>
+    </main>
   );
 }

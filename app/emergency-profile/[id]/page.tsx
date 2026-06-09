@@ -10,7 +10,7 @@ export default async function EmergencyProfilePage({
 
   console.log("ID:", id);
 
- 
+  
   
   const { data: profile, error } = await supabase
   .from("profiles")
